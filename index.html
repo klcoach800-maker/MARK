@@ -1,778 +1,824 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Annamalai University - Attendance System</title>
-    <style>
-        :root {
-            --primary: #004085;
-            --secondary: #f8f9fa;
-            --accent: #ffc107;
-            --text: #333;
-            --white: #ffffff;
-            --success: #28a745;
-            --danger: #dc3545;
-            --excel: #1d6f42;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Elevation">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#14231C">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEP0lEQVR4nO3cP27UWADH8WSFREdFSYPgAHAPOq6BtkJ7CESFuAYd90gOEIkLUKzS0W1h7WiUmZ/njf89P/vzUZpMnHjC+/r52TPh9uWbVzdwzl+1nwDrJQ4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRA9q/0E2vBwd7/8Tt++f7f8To+ZOS6rUkbF/R6I44K6I1R37+LoU/3YrfscxEEkDiJxEImDyH2OKK0E57v9sIb17zEzB5E4iMSxIumEVet0Iw4icRCJg0gcRGPvc1xcK/XcFbhqnVX9zQ07NCqO/tE9Hs4frx+Pv/Tx14vDBoWJPNzd62Nhw08rhWX8eP34pIwnD5YP+ZJXdMvfHl2hgXEUjtNpFuVfHbNfJjHLgrQ7vErGvttmV4djQ1ytEE0fR/m00TF5rJaZg2ji93OMmQBOv/fs8tM17WKmnDmM2XiremF2SByuJ3dirjVHdw902i2r29vUaEF6hqmxM2McJVNCQ9PGDs07c/SPvTJWbvbTysdfL04jOPvgqb2d49dmob9bmXaScKtjpMJFlT9qatI/f386/vTLt+/l31u+3BZHGw4z5ZMsjh8sSeSqCzGXsi05W0bhV2/+Px13HyW7E0cDurG8OPYl2zzc3XcfJfudLI7NrBC9QfDg6jjcPVxY+bTRKd/yorWfVnZ4vM5kwFHd6tXKhm91vH3/bsnpueefce0zBxWJg0gca9edYsrvgV51t7Rfq2uOYZ5/+Hr86Z+fn2s9kybsZeZ4/uHrkzLSgytUPnmkbYatcHcRR38BTfTR6e9jwAml/4qvgThGXrKWjP1hm9XeHj08sS/fvp9GcPbB8Rpec4z5r0FadHxrZ44UTk0zc6xwGLqnVH7K6LZc4S9S0XVxeGFlVxpYc1CLOLZv8HzfRhx1lwJbXYhc/L3aiOPm+hHqDpfye6DdlqcHWZUyVvLn1M3EcVNjnLY6ZxRq7D7HgNH68/PzxQvawwSz8xqeaGnmGKz/5OLlt6SxmWOwroANvCq75LJjL3F0WqxhJiUn0F2cVhhmgjgs4rbqiji8sLI3TisrNet8XPjDb/99/L3Mnhhgjtm6fLzMHKs2+YF31Q/c16VsiypOzGYOInEQjY3DanTDRsWhjG0bHocyNu/25ZtXtZ8DK2VBSiQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0X9uBQ7gkhBcaQAAAABJRU5ErkJggg==">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAEP0lEQVR4nO3cP27UWADH8WSFREdFSYPgAHAPOq6BtkJ7CESFuAYd90gOEIkLUKzS0W1h7WiUmZ/njf89P/vzUZpMnHjC+/r52TPh9uWbVzdwzl+1nwDrJQ4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRA9q/0E2vBwd7/8Tt++f7f8To+ZOS6rUkbF/R6I44K6I1R37+LoU/3YrfscxEEkDiJxEImDyH2OKK0E57v9sIb17zEzB5E4iMSxIumEVet0Iw4icRCJg0gcRGPvc1xcK/XcFbhqnVX9zQ07NCqO/tE9Hs4frx+Pv/Tx14vDBoWJPNzd62Nhw08rhWX8eP34pIwnD5YP+ZJXdMvfHl2hgXEUjtNpFuVfHbNfJjHLgrQ7vErGvttmV4djQ1ytEE0fR/m00TF5rJaZg2ji93OMmQBOv/fs8tM17WKmnDmM2XiremF2SByuJ3dirjVHdw902i2r29vUaEF6hqmxM2McJVNCQ9PGDs07c/SPvTJWbvbTysdfL04jOPvgqb2d49dmob9bmXaScKtjpMJFlT9qatI/f386/vTLt+/l31u+3BZHGw4z5ZMsjh8sSeSqCzGXsi05W0bhV2/+Px13HyW7E0cDurG8OPYl2zzc3XcfJfudLI7NrBC9QfDg6jjcPVxY+bTRKd/yorWfVnZ4vM5kwFHd6tXKhm91vH3/bsnpueefce0zBxWJg0gca9edYsrvgV51t7Rfq2uOYZ5/+Hr86Z+fn2s9kybsZeZ4/uHrkzLSgytUPnmkbYatcHcRR38BTfTR6e9jwAml/4qvgThGXrKWjP1hm9XeHj08sS/fvp9GcPbB8Rpec4z5r0FadHxrZ44UTk0zc6xwGLqnVH7K6LZc4S9S0XVxeGFlVxpYc1CLOLZv8HzfRhx1lwJbXYhc/L3aiOPm+hHqDpfye6DdlqcHWZUyVvLn1M3EcVNjnLY6ZxRq7D7HgNH68/PzxQvawwSz8xqeaGnmGKz/5OLlt6SxmWOwroANvCq75LJjL3F0WqxhJiUn0F2cVhhmgjgs4rbqiji8sLI3TisrNet8XPjDb/99/L3Mnhhgjtm6fLzMHKs2+YF31Q/c16VsiypOzGYOInEQjY3DanTDRsWhjG0bHocyNu/25ZtXtZ8DK2VBSiQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIHkTiIxEEkDiJxEImDSBxE4iASB5E4iMRBJA4icRCJg0gcROIgEgeROIjEQSQOInEQiYNIHETiIBIH0X9uBQ7gkhBcaQAAAABJRU5ErkJggg==">
+<title>Elevation — Altitude Training Study Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F0F2EC;
+    --paper-raised:#FFFFFF;
+    --ink:#14231C;
+    --ink-soft:#586257;
+    --line:#D9DED2;
+    --altitude:#C1440E;
+    --altitude-soft:#F3DCCB;
+    --sealevel:#1B6FA8;
+    --sealevel-soft:#D5E4ED;
+    --control:#6B6B6B;
+    --control-soft:#E3E3E1;
+    --amber:#C98A1F;
+    --amber-soft:#F3E4C3;
+    --good:#2F7A4F;
+    --bad:#B23A2E;
+    --radius:14px;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif;}
+  body{
+    padding-bottom: calc(76px + env(safe-area-inset-bottom));
+    min-height:100vh;
+  }
+  h1,h2,h3{font-family:'Fraunces',serif; font-weight:600; margin:0;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        
-        body { 
-            background-color: #ffffff; 
-            padding-bottom: 30px; 
-            min-height: 100vh; 
-            position: relative; 
-            color: #333;
-        }
+  /* ---------- Header ---------- */
+  header.top{
+    padding: calc(14px + env(safe-area-inset-top)) 18px 14px;
+    background: var(--ink);
+    color: var(--paper);
+    position: sticky; top:0; z-index:20;
+  }
+  .brand-row{display:flex; align-items:baseline; justify-content:space-between;}
+  .brand-row h1{font-size:20px; letter-spacing:-0.01em; color:var(--paper);}
+  .brand-row .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:#9FAE9C; margin-bottom:2px;}
+  .contour-wrap{margin-top:10px;}
+  .contour-wrap svg{display:block; width:100%; height:34px;}
+  .legend{display:flex; gap:14px; margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.02em; color:#C7D0C4;}
+  .legend span{display:inline-flex; align-items:center; gap:5px;}
+  .dot{width:7px; height:7px; border-radius:50%; display:inline-block;}
 
-        /* --- HEADER --- */
-        header {
-            background: var(--white);
-            padding: 0 0 15px 0; /* Adjusted padding */
-            text-align: center;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            border-bottom: 1px solid #ddd;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
+  /* ---------- Layout ---------- */
+  main{padding:16px; max-width:640px; margin:0 auto;}
+  .card{
+    background:var(--paper-raised);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:16px;
+    margin-bottom:14px;
+  }
+  .section-title{font-size:12px; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-soft); font-family:'IBM Plex Mono',monospace; margin-bottom:10px;}
+  .row{display:flex; gap:10px; align-items:center;}
+  .between{justify-content:space-between;}
+  .muted{color:var(--ink-soft); font-size:13px;}
 
-        .header-top {
-            display: flex;
-            justify-content: flex-start; 
-            font-size: 0.9rem;
-            color: #444;
-            margin-bottom: 10px;
-            font-weight: bold;
-            background: #f1f1f1;
-            padding: 5px 15px;
-        }
+  input[type=text], input[type=number], select{
+    width:100%; padding:11px 12px; border-radius:10px; border:1px solid var(--line);
+    background:#FBFBF9; font-family:'Inter',sans-serif; font-size:15px; color:var(--ink);
+  }
+  input:focus, select:focus{outline:2px solid var(--amber); outline-offset:1px;}
+  label{font-size:12px; color:var(--ink-soft); display:block; margin-bottom:4px; font-weight:500;}
+  .field{margin-bottom:10px;}
 
-        /* NEW BRANDING STYLES FOR LOGO + TEXT */
-        .branding-row {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px; /* Space between logo and text */
-            padding: 0 15px;
-        }
+  button{
+    font-family:'Inter',sans-serif; font-weight:600; font-size:14px;
+    border-radius:10px; border:1px solid var(--ink); padding:11px 16px;
+    background:var(--ink); color:var(--paper); cursor:pointer;
+  }
+  button.secondary{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  button.ghost{background:transparent; color:var(--bad); border:1px solid transparent; padding:6px 8px; font-size:13px;}
+  button.small{padding:7px 12px; font-size:13px;}
+  button:disabled{opacity:0.4; cursor:not-allowed;}
+  button:active{transform: scale(0.98);}
 
-        .branding-row img {
-            height: 65px; /* Adjust logo size */
-            width: auto;
-        }
+  .pill{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; padding:3px 8px; border-radius:20px;
+    text-transform:uppercase; letter-spacing:0.04em; font-weight:600;
+  }
+  .pill.altitude{background:var(--altitude-soft); color:var(--altitude);}
+  .pill.sealevel{background:var(--sealevel-soft); color:var(--sealevel);}
+  .pill.control{background:var(--control-soft); color:var(--control);}
 
-        .branding-text {
-            text-align: left;
-        }
-        
-        h1 { 
-            font-size: 1.2rem; 
-            color: var(--primary); 
-            text-transform: uppercase; 
-            font-weight: 800; 
-            line-height: 1.2;
-            margin-bottom: 2px;
-        }
-        
-        h2 { 
-            font-size: 0.9rem; 
-            color: #555; 
-            font-weight: 500; 
-        }
+  .subject-row{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:10px 0; border-bottom:1px solid var(--line);
+  }
+  .subject-row:last-child{border-bottom:none;}
+  .subject-name{font-weight:600; font-size:14.5px;}
+  .subject-meta{font-size:12px; color:var(--ink-soft); margin-top:2px;}
 
-        /* --- LAYOUT --- */
-        .container { max-width: 800px; margin: 15px auto; padding: 0 15px; padding-bottom: 60px; }
-        .page { display: none; animation: fadeIn 0.4s; }
-        .active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+  table{width:100%; border-collapse:collapse; font-size:13px;}
+  th,td{text-align:left; padding:8px 6px; border-bottom:1px solid var(--line);}
+  th{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:0.05em; color:var(--ink-soft); font-weight:600;}
+  td.num, th.num{text-align:right; font-family:'IBM Plex Mono',monospace;}
+  .sig-yes{color:var(--good); font-weight:700;}
+  .sig-no{color:var(--ink-soft);}
 
-        /* --- CARDS & FORMS --- */
-        .card {
-            background: var(--white);
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
-            margin-bottom: 20px;
-            border: 1px solid #dcdcdc;
-        }
+  .empty{
+    text-align:center; padding:34px 16px; color:var(--ink-soft);
+  }
+  .empty h3{font-size:16px; margin-bottom:6px; color:var(--ink);}
 
-        label { display: block; margin-bottom: 8px; font-weight: 600; color: var(--text); }
-        
-        select, input, textarea {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border: 1px solid #bbb; 
-            border-radius: 8px;
-            font-size: 1rem;
-            background: #fff;
-        }
+  .var-block{border-top:1px solid var(--line); padding-top:12px; margin-top:12px;}
+  .var-block:first-child{border-top:none; padding-top:0; margin-top:0;}
+  .var-label{font-weight:600; font-size:13.5px; margin-bottom:8px;}
+  .pp-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px;}
 
-        /* --- BUTTONS --- */
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            text-transform: uppercase;
-        }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-outline { background: transparent; border: 2px solid var(--primary); color: var(--primary); margin-top: 10px; }
-        
-        .btn-excel { background: var(--excel); color: white; margin-left: 10px; }
-        .btn-danger { background: var(--danger); color: white; margin-top: 10px; }
+  /* ---------- Tabs ---------- */
+  nav.tabbar{
+    position:fixed; bottom:0; left:0; right:0; z-index:30;
+    background: rgba(240,242,236,0.92); backdrop-filter: blur(10px);
+    border-top:1px solid var(--line);
+    padding: 8px 10px calc(8px + env(safe-area-inset-bottom));
+    display:flex; justify-content:space-around;
+  }
+  .tab-btn{
+    background:none; border:none; color:var(--ink-soft); font-family:'Inter',sans-serif;
+    font-size:11px; font-weight:600; display:flex; flex-direction:column; align-items:center; gap:3px;
+    padding:4px 10px; border-radius:8px;
+  }
+  .tab-btn.active{color:var(--ink);}
+  .tab-btn.active .ic{background:var(--ink);}
+  .ic{width:18px; height:3px; border-radius:2px; background:var(--line);}
 
-        .btn-back {
-            background: #f0f0f0; color: #333; border: 1px solid #ccc; padding: 8px 15px;
-            border-radius: 20px; font-weight: bold; font-size: 0.9rem;
-            cursor: pointer; display: inline-flex; align-items: center; margin-bottom: 15px;
-        }
+  .toast{
+    position:fixed; bottom:calc(90px + env(safe-area-inset-bottom)); left:50%; transform:translateX(-50%);
+    background:var(--ink); color:var(--paper); padding:9px 16px; border-radius:20px;
+    font-size:13px; font-weight:500; opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease; z-index:40;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(-4px);}
 
-        /* --- ATTENDANCE UI --- */
-        .hour-selector {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px;
-        }
-        .hour-option {
-            background: #f1f3f5; padding: 15px 5px; text-align: center; border-radius: 6px;
-            font-size: 0.9rem; cursor: pointer; border: 1px solid #ccc; font-weight: 600;
-        }
-        .hour-option.selected {
-            background: #e3f2fd; border-color: var(--primary); color: var(--primary); font-weight: bold; border: 2px solid var(--primary);
-        }
+  select#varSelect, select#metricSelect{font-family:'IBM Plex Mono',monospace; font-size:13px;}
+  .toggle-row{display:flex; gap:8px; margin-bottom:14px;}
+  .toggle-row button{flex:1;}
+  .note{font-size:12px; color:var(--ink-soft); line-height:1.5; margin-top:4px;}
+  .disclaimer{font-size:11.5px; color:var(--ink-soft); line-height:1.5; border-top:1px dashed var(--line); margin-top:14px; padding-top:10px;}
 
-        .student-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 0; border-bottom: 1px solid #ccc;
-        }
-        .status-toggle {
-            display: flex; background: #eee; border-radius: 20px; padding: 2px; border: 1px solid #ccc;
-        }
-        .status-btn {
-            padding: 8px 15px; border-radius: 18px; cursor: pointer;
-            font-size: 0.85rem; font-weight: bold; color: #777;
-        }
-        .status-btn.active-p { background: var(--success); color: white; }
-        .status-btn.active-a { background: var(--danger); color: white; }
-
-        /* --- FOOTER --- */
-        .footer-credit {
-            text-align: center;
-            font-size: 0.85rem;
-            color: #555;
-            padding: 20px;
-            margin-top: 20px;
-            border-top: 1px solid #ddd;
-            font-weight: 600;
-            background: #f9f9f9;
-        }
-
-        /* --- MODAL --- */
-        #dataModal, #reportModal {
-            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.6); z-index: 2000; padding: 20px; overflow-y: auto;
-        }
-        .modal-content {
-            background: white; padding: 20px; border-radius: 10px; margin-top: 50px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        .close-modal { float: right; font-size: 1.5rem; cursor: pointer; }
-
-        /* --- PRINT / PDF STYLES --- */
-        @media print {
-            body * { visibility: hidden; }
-            #reportArea, #reportArea * { visibility: visible; }
-            #reportArea { position: absolute; left: 0; top: 0; width: 100%; margin: 0; padding: 10px; }
-            .no-print { display: none !important; }
-            header { display: none; }
-            
-            table { font-size: 10px; width: 100%; }
-            th, td { padding: 4px; border: 1px solid #000; }
-        }
-    </style>
+  /* ---------- Splash / Credit Screen ---------- */
+  #splashScreen{
+    position:fixed; inset:0; z-index:500;
+    background: radial-gradient(120% 140% at 50% 0%, #1C2E22 0%, #101B15 55%, #0B120E 100%);
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:22px; padding:24px; text-align:center;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+  #splashScreen.hide{ opacity:0; visibility:hidden; pointer-events:none; }
+  .splash-mark{ width:132px; opacity:0; animation: splashRise 0.9s ease forwards 0.15s; }
+  .splash-mark svg{ display:block; width:100%; height:auto; }
+  .splash-rule{ width:34px; height:1px; background:linear-gradient(90deg, transparent, #C98A1F, transparent); opacity:0; animation: splashFade 0.8s ease forwards 0.5s; }
+  .splash-title{
+    font-family:'Fraunces',serif; font-weight:600; font-size:26px; letter-spacing:-0.01em;
+    color:#F4F6F1; opacity:0; animation: splashFade 0.9s ease forwards 0.55s;
+  }
+  .splash-tag{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:0.16em; text-transform:uppercase;
+    color:#8FA08B; opacity:0; animation: splashFade 0.9s ease forwards 0.75s;
+  }
+  .splash-credit{
+    margin-top:8px; font-family:'Inter',sans-serif; font-size:13px; color:#C7D0C4;
+    opacity:0; animation: splashFade 0.9s ease forwards 0.95s;
+  }
+  .splash-credit .name{ display:block; font-family:'Fraunces',serif; font-weight:600; font-size:16px; color:#E8B34A; margin-top:4px; letter-spacing:0.01em; }
+  .splash-credit .role{ display:block; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.1em; text-transform:uppercase; color:#8FA08B; margin-top:3px; }
+  .splash-hint{
+    position:absolute; bottom:calc(28px + env(safe-area-inset-bottom));
+    font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:0.08em; text-transform:uppercase;
+    color:#5E6B5A; opacity:0; animation: splashFade 0.8s ease forwards 1.3s;
+  }
+  @keyframes splashRise{ from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);} }
+  @keyframes splashFade{ from{opacity:0;} to{opacity:1;} }
+</style>
 </head>
 <body>
 
-    <header>
-        <div class="header-top">
-            <span id="dateTimeDisplay">--/--/---- - --:--</span>
-        </div>
-        
-        <div class="branding-row">
-            <img src="Annamalai_University_logo.png" alt="University Logo" onerror="this.style.display='none'">
-            <div class="branding-text">
-                <h1>Annamalai University</h1>
-                <h2>Department of Physical Education</h2>
-            </div>
-        </div>
-    </header>
+<div id="splashScreen">
+  <div class="splash-mark">
+    <svg viewBox="0 0 400 34" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0,28 C40,28 50,10 90,10 C120,10 130,22 170,22 C210,22 220,4 260,4 C300,4 310,26 340,26 C365,26 375,16 400,16"
+            fill="none" stroke="#F0F2EC" stroke-width="2.2"/>
+      <circle cx="330" cy="18" r="5" fill="#8FA08B"/>
+      <circle cx="180" cy="22" r="5" fill="#1B6FA8"/>
+      <circle cx="80" cy="12" r="5" fill="#C1440E"/>
+    </svg>
+  </div>
+  <div class="splash-rule"></div>
+  <div class="splash-title">Elevation</div>
+  <div class="splash-tag">Altitude Training Study Tracker</div>
+  <div class="splash-credit">
+    Designed by
+    <span class="name">Hashim Veeran A</span>
+    <span class="role">Research Scholar</span>
+  </div>
+  <div class="splash-hint">Tap anywhere to continue</div>
+</div>
 
-    <div class="container">
-
-        <div id="page1" class="page active-page">
-            
-            <div class="card">
-                <h3 style="color:var(--primary); margin-bottom:15px;">ATTENDANCE</h3>
-                <label>Course</label>
-                <select id="courseSelect" onchange="onCourseChange('courseSelect', 'yearSelect', 'semSelect')">
-                    <option value="">-- Select Course --</option>
-                    <option value="BPES">BPES</option>
-                    <option value="BPED">BPED</option>
-                    <option value="MPED">MPED</option>
-                </select>
-
-                <label>Year</label>
-                <select id="yearSelect">
-                    <option value="">-- Select Year --</option>
-                </select>
-
-                <label>Semester</label>
-                <select id="semSelect">
-                    <option value="">-- Select Semester --</option>
-                </select>
-
-                <button class="btn btn-primary" onclick="goToPage2()">MARK ATTENDANCE</button>
-            </div>
-
-            <div class="card" style="border-top: 5px solid var(--accent);">
-                <h3>Attendance Reports</h3>
-                <p style="font-size:0.85rem; color:#666; margin-bottom:15px;">Daily, Monthly & Yearly Records</p>
-                <button class="btn btn-outline" onclick="openReportModal()">Search Records</button>
-            </div>
-
-            <div style="text-align: center; margin-top: 20px;">
-                <button class="btn-back" style="background:none; text-decoration:underline;" onclick="openDataModal()">+ Manage Student Database</button>
-            </div>
-        </div>
-
-        <div id="page2" class="page">
-            <button class="btn-back" onclick="goToPage1()">&#8592; Back</button>
-
-            <div class="card">
-                <div style="margin-bottom:15px; border-bottom:1px solid #eee; padding-bottom:10px;">
-                    <h3 id="classTitle" style="color:var(--primary);">Class Info</h3>
-                </div>
-
-                <label>Date</label>
-                <input type="date" id="attendanceDate" onchange="checkExistingRecord()">
-
-                <label>Select Hour</label>
-                <div class="hour-selector">
-                    <div class="hour-option" onclick="selectHour(this, 'Practical Hour 1 & 2')">PRACTICAL HOUR 1 & 2</div>
-                    <div class="hour-option" onclick="selectHour(this, 'Theory 1')">THEORY 1</div>
-                    <div class="hour-option" onclick="selectHour(this, 'Theory 2')">THEORY 2</div>
-                    <div class="hour-option" onclick="selectHour(this, 'Theory 3')">THEORY 3</div>
-                    <div class="hour-option" onclick="selectHour(this, 'Practical Hour 3')">PRACTICAL HOUR 3</div>
-                </div>
-
-                <div id="studentListContainer"></div>
-
-                <br>
-                <button class="btn btn-primary" onclick="submitAttendance()">Submit & Save</button>
-            </div>
-        </div>
-
+<header class="top">
+  <div class="brand-row">
+    <div>
+      <div class="eyebrow">PhD Field Tracker</div>
+      <h1>Elevation</h1>
     </div>
+    <div class="eyebrow" id="subjCountTop">0 / 30 subjects</div>
+  </div>
+  <div class="contour-wrap">
+    <svg viewBox="0 0 400 34" preserveAspectRatio="none">
+      <path d="M0,28 C40,28 50,10 90,10 C120,10 130,22 170,22 C210,22 220,4 260,4 C300,4 310,26 340,26 C365,26 375,16 400,16"
+            fill="none" stroke="#3B4A3E" stroke-width="1.5"/>
+      <circle cx="330" cy="18" r="4" fill="#6B6B6B"/>
+      <circle cx="180" cy="22" r="4" fill="#1B6FA8"/>
+      <circle cx="80" cy="12" r="4" fill="#C1440E"/>
+    </svg>
+  </div>
+  <div class="legend">
+    <span><span class="dot" style="background:#C1440E"></span>Altitude (Kashmir, 2500m+)</span>
+    <span><span class="dot" style="background:#1B6FA8"></span>Sea-Level (Nilambur)</span>
+    <span><span class="dot" style="background:#6B6B6B"></span>Control</span>
+  </div>
+</header>
 
-    <div class="footer-credit">
-        Designed by Hashim Veeran A
+<main id="app"></main>
+
+<nav class="tabbar">
+  <button class="tab-btn" data-tab="subjects"><span class="ic"></span>Subjects</button>
+  <button class="tab-btn" data-tab="data"><span class="ic"></span>Data Entry</button>
+  <button class="tab-btn" data-tab="analysis"><span class="ic"></span>Analysis</button>
+  <button class="tab-btn" data-tab="export"><span class="ic"></span>Export</button>
+</nav>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= CONSTANTS ================= */
+const GROUPS = [
+  {key:'Altitude', label:'Altitude', color:'#C1440E', class:'altitude'},
+  {key:'SeaLevel', label:'Sea-Level', color:'#1B6FA8', class:'sealevel'},
+  {key:'Control', label:'Control', color:'#6B6B6B', class:'control'},
+];
+
+const VARIABLES = [
+  {key:'hrr', label:'Heart Rate Recovery', unit:'bpm drop', cat:'Physiological'},
+  {key:'vc', label:'Vital Capacity', unit:'L', cat:'Physiological'},
+  {key:'rhr', label:'Resting Heart Rate', unit:'bpm', cat:'Physiological'},
+  {key:'vo2', label:'VO2 Max (Cooper)', unit:'ml/kg/min', cat:'Physiological'},
+  {key:'speed', label:'Speed — 30m Sprint', unit:'sec', cat:'Physiological'},
+  {key:'agility', label:'Agility — Illinois', unit:'sec', cat:'Physiological'},
+  {key:'power', label:'Explosive Power — Vertical Jump', unit:'cm', cat:'Physiological'},
+  {key:'anpower', label:'Anaerobic Power — Margaria-Kalamen', unit:'W', cat:'Physiological'},
+  {key:'flex', label:'Flexibility — Sit & Reach', unit:'cm', cat:'Physiological'},
+  {key:'dribble', label:'Dribbling', unit:'sec', cat:'Skill'},
+  {key:'passing', label:'Passing', unit:'pts /12', cat:'Skill'},
+  {key:'shooting', label:'Shooting', unit:'pts /16', cat:'Skill'},
+];
+
+const MAX_SUBJECTS = 30;
+const STORAGE_KEY = 'elevation-study-data';
+
+/* ================= STATE ================= */
+let state = { subjects: [], scores: {} }; // scores[subjectId][varKey] = {pre, post}
+let activeTab = 'subjects';
+let dataSubjectId = null;
+let analysisVar = VARIABLES[0].key;
+let analysisMetric = 'gain'; // 'gain' | 'post'
+
+/* ================= STORAGE (on-device, no server needed) ================= */
+function loadState(){
+  try{
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state.subjects = parsed.subjects || [];
+      state.scores = parsed.scores || {};
+    }
+  }catch(e){ /* no data yet, or storage unavailable */ }
+  render();
+}
+function saveState(){
+  try{
+    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  }catch(e){ showToast('Save failed — your browser may be blocking storage'); }
+}
+
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(showToast._tm);
+  showToast._tm = setTimeout(()=>t.classList.remove('show'), 1800);
+}
+function showAutoSaveIndicator(){
+  const t = document.getElementById('toast');
+  t.textContent = '✓ Saved';
+  t.style.opacity = '';
+  t.classList.add('show');
+  clearTimeout(showAutoSaveIndicator._tm);
+  showAutoSaveIndicator._tm = setTimeout(()=>t.classList.remove('show'), 900);
+}
+
+/* ================= STATS ================= */
+function mean(arr){ return arr.reduce((a,b)=>a+b,0)/arr.length; }
+function sd(arr){
+  if(arr.length<2) return 0;
+  const m = mean(arr);
+  const v = arr.reduce((a,b)=>a+(b-m)*(b-m),0)/(arr.length-1);
+  return Math.sqrt(v);
+}
+function gammaln(x){
+  const cof=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+  let y=x, tmp=x+5.5; tmp-=(x+0.5)*Math.log(tmp);
+  let ser=1.000000000190015;
+  for(let j=0;j<6;j++){ y+=1; ser+=cof[j]/y; }
+  return -tmp+Math.log(2.5066282746310005*ser/x);
+}
+function betacf(a,b,x){
+  const MAXIT=100, EPS=3e-7, FPMIN=1e-30;
+  let qab=a+b, qap=a+1, qam=a-1;
+  let c=1, d=1-qab*x/qap;
+  if(Math.abs(d)<FPMIN) d=FPMIN;
+  d=1/d; let h=d;
+  for(let m=1;m<=MAXIT;m++){
+    const m2=2*m;
+    let aa=m*(b-m)*x/((qam+m2)*(a+m2));
+    d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN;
+    c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN;
+    d=1/d; h*=d*c;
+    aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));
+    d=1+aa*d; if(Math.abs(d)<FPMIN)d=FPMIN;
+    c=1+aa/c; if(Math.abs(c)<FPMIN)c=FPMIN;
+    d=1/d; const del=d*c; h*=del;
+    if(Math.abs(del-1)<EPS) break;
+  }
+  return h;
+}
+function betai(a,b,x){
+  if(x<=0) return 0;
+  if(x>=1) return 1;
+  const bt = Math.exp(gammaln(a+b)-gammaln(a)-gammaln(b)+a*Math.log(x)+b*Math.log(1-x));
+  if(x < (a+1)/(a+b+2)) return bt*betacf(a,b,x)/a;
+  return 1-bt*betacf(b,a,1-x)/b;
+}
+function tTestPaired(pre, post){
+  const n = pre.length;
+  if(n<2) return null;
+  const diffs = pre.map((p,i)=>post[i]-p);
+  const md = mean(diffs), sdd = sd(diffs);
+  if(sdd===0) return {t:0, df:n-1, p: md===0?1:0, meanDiff:md, n};
+  const t = md/(sdd/Math.sqrt(n));
+  const df = n-1;
+  const p = betai(df/2, 0.5, df/(df+t*t));
+  return {t, df, p, meanDiff:md, n};
+}
+function oneWayAnova(groupArrays){
+  // groupArrays: array of arrays of numbers (one per group)
+  const groups = groupArrays.filter(g=>g.length>0);
+  const k = groups.length;
+  const N = groups.reduce((a,g)=>a+g.length,0);
+  if(k<2 || N<=k) return null;
+  const grandMean = mean(groups.flat());
+  let ssb=0, ssw=0;
+  groups.forEach(g=>{
+    const m = mean(g);
+    ssb += g.length*(m-grandMean)*(m-grandMean);
+    g.forEach(x=> ssw += (x-m)*(x-m));
+  });
+  const dfb = k-1, dfw = N-k;
+  if(dfw<=0) return null;
+  const msb = ssb/dfb, msw = ssw/dfw;
+  if(msw===0) return {F:0, df1:dfb, df2:dfw, p:1, msw, groups};
+  const F = msb/msw;
+  const p = betai(dfw/2, dfb/2, dfw/(dfw+dfb*F));
+  return {F, df1:dfb, df2:dfw, p, msw, groups};
+}
+// Tukey HSD q-table (alpha=0.05, k=3 groups) — linear interpolation over df error
+const Q_TABLE_K3 = [
+  [5,4.60],[6,4.34],[7,4.16],[8,4.04],[9,3.95],[10,3.88],[11,3.82],[12,3.77],
+  [13,3.73],[14,3.70],[15,3.67],[16,3.65],[17,3.63],[18,3.61],[19,3.59],[20,3.58],
+  [24,3.53],[30,3.49],[40,3.44],[60,3.40],[120,3.36],[100000,3.31]
+];
+function qCritical(df){
+  if(df<=Q_TABLE_K3[0][0]) return Q_TABLE_K3[0][1];
+  for(let i=0;i<Q_TABLE_K3.length-1;i++){
+    const [d1,q1]=Q_TABLE_K3[i], [d2,q2]=Q_TABLE_K3[i+1];
+    if(df>=d1 && df<=d2){
+      const frac=(df-d1)/(d2-d1);
+      return q1 + frac*(q2-q1);
+    }
+  }
+  return Q_TABLE_K3[Q_TABLE_K3.length-1][1];
+}
+function tukeyHSD(groupsWithLabels, msw, dfw){
+  // groupsWithLabels: [{label, values}]
+  const q = qCritical(dfw);
+  const results = [];
+  for(let i=0;i<groupsWithLabels.length;i++){
+    for(let j=i+1;j<groupsWithLabels.length;j++){
+      const A = groupsWithLabels[i], B = groupsWithLabels[j];
+      if(A.values.length===0 || B.values.length===0) continue;
+      const nA=A.values.length, nB=B.values.length;
+      const nHarm = 2/(1/nA + 1/nB);
+      const diff = Math.abs(mean(A.values)-mean(B.values));
+      const hsd = q*Math.sqrt(msw/nHarm);
+      results.push({pair:`${A.label} – ${B.label}`, diff, hsd, sig: diff>hsd});
+    }
+  }
+  return {q, results};
+}
+
+/* ================= DATA HELPERS ================= */
+function getGroupInfo(key){ return GROUPS.find(g=>g.key===key); }
+function subjectsInGroup(gkey){ return state.subjects.filter(s=>s.group===gkey); }
+function getScore(subjId, varKey){
+  return (state.scores[subjId] && state.scores[subjId][varKey]) || {pre:'', post:''};
+}
+function setScore(subjId, varKey, field, value){
+  if(!state.scores[subjId]) state.scores[subjId] = {};
+  if(!state.scores[subjId][varKey]) state.scores[subjId][varKey] = {pre:'', post:''};
+  state.scores[subjId][varKey][field] = value;
+}
+function pairedArraysForVar(subjectIds, varKey){
+  const pre=[], post=[];
+  subjectIds.forEach(id=>{
+    const s = getScore(id, varKey);
+    if(s.pre!=='' && s.post!=='' && !isNaN(parseFloat(s.pre)) && !isNaN(parseFloat(s.post))){
+      pre.push(parseFloat(s.pre)); post.push(parseFloat(s.post));
+    }
+  });
+  return {pre, post};
+}
+
+/* ================= RENDER ================= */
+function render(){
+  document.getElementById('subjCountTop').textContent = `${state.subjects.length} / ${MAX_SUBJECTS} subjects`;
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active', b.dataset.tab===activeTab));
+  const app = document.getElementById('app');
+  if(activeTab==='subjects') app.innerHTML = renderSubjects();
+  else if(activeTab==='data') app.innerHTML = renderDataEntry();
+  else if(activeTab==='analysis') app.innerHTML = renderAnalysis();
+  else app.innerHTML = renderExport();
+  bindEvents();
+}
+
+function renderSubjects(){
+  let rows = state.subjects.map(s=>{
+    const g = getGroupInfo(s.group);
+    return `
+    <div class="subject-row">
+      <div>
+        <div class="subject-name">${escapeHtml(s.name)}</div>
+        <div class="subject-meta"><span class="pill ${g.class}">${g.label}</span></div>
+      </div>
+      <button class="ghost" data-remove="${s.id}">Remove</button>
+    </div>`;
+  }).join('');
+  if(!rows) rows = `<div class="empty"><h3>No subjects yet</h3><div class="note">Add your first subject below — up to ${MAX_SUBJECTS} across the three groups.</div></div>`;
+
+  const disabled = state.subjects.length>=MAX_SUBJECTS;
+  return `
+  <div class="card">
+    <div class="section-title">Add Subject</div>
+    <div class="field">
+      <label>Name</label>
+      <input type="text" id="newName" placeholder="e.g. Player 14" ${disabled?'disabled':''}>
     </div>
+    <div class="field">
+      <label>Group</label>
+      <select id="newGroup" ${disabled?'disabled':''}>
+        ${GROUPS.map(g=>`<option value="${g.key}">${g.label}</option>`).join('')}
+      </select>
+    </div>
+    <button id="addSubjectBtn" ${disabled?'disabled':''} style="width:100%">${disabled?'Roster full (30/30)':'Add Subject'}</button>
+  </div>
+  <div class="card">
+    <div class="row between" style="margin-bottom:6px;">
+      <div class="section-title" style="margin-bottom:0">Roster</div>
+      <div class="muted mono">${state.subjects.length} total</div>
+    </div>
+    ${GROUPS.map(g=>{
+      const n = subjectsInGroup(g.key).length;
+      return `<div class="muted" style="margin-bottom:2px;"><span class="pill ${g.class}">${g.label}</span> ${n} subject${n===1?'':'s'}</div>`;
+    }).join('')}
+    <div style="margin-top:10px;">${rows}</div>
+  </div>`;
+}
 
-    <div id="dataModal">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeDataModal()">&times;</span>
-            <h3>Student Database</h3>
-            <p style="font-size:0.85rem; color:#666;">Select Batch to Manage:</p>
-            <select id="addCourse" onchange="updateYears('addCourse', 'addYear')">
-                <option value="BPES">BPES</option>
-                <option value="BPED">BPED</option>
-                <option value="MPED">MPED</option>
-            </select>
-            <select id="addYear"></select>
+function renderDataEntry(){
+  if(state.subjects.length===0){
+    return `<div class="card"><div class="empty"><h3>Add subjects first</h3><div class="note">Head to the Subjects tab to build your roster, then come back to log test scores.</div></div></div>`;
+  }
+  if(!dataSubjectId || !state.subjects.find(s=>s.id===dataSubjectId)){
+    dataSubjectId = state.subjects[0].id;
+  }
+  const subj = state.subjects.find(s=>s.id===dataSubjectId);
+  const g = getGroupInfo(subj.group);
 
-            <hr style="margin:10px 0;">
-
-            <h4>Add Single Student</h4>
-            <input type="text" id="newRoll" placeholder="Roll No">
-            <input type="text" id="newName" placeholder="Name">
-            <button class="btn btn-outline" onclick="saveOneStudent()">Save</button>
-
-            <br><br>
-            <h4>Bulk Import</h4>
-            <textarea id="bulkInput" rows="3" placeholder="A101, Name..."></textarea>
-            <button class="btn btn-outline" onclick="importBulk()">Import</button>
-
-            <hr style="margin:20px 0;">
-            <h4 style="color:var(--danger);">Clear Data</h4>
-            <p style="font-size:0.85rem; color:#666;">Remove all students for the selected Course/Year.</p>
-            <button class="btn btn-danger" onclick="clearBatchDB()">Clear Student List</button>
+  const varsHtml = VARIABLES.map(v=>{
+    const s = getScore(dataSubjectId, v.key);
+    return `
+    <div class="var-block">
+      <div class="var-label">${v.label} <span class="muted">(${v.unit})</span></div>
+      <div class="pp-grid">
+        <div>
+          <label>Pre-test</label>
+          <input type="number" step="any" inputmode="decimal" data-var="${v.key}" data-field="pre" value="${s.pre}" placeholder="—">
         </div>
-    </div>
-
-    <div id="reportModal">
-        <div class="modal-content" id="reportArea">
-            <span class="close-modal no-print" onclick="closeReportModal()">&times;</span>
-            
-            <div class="no-print">
-                <h3>Generate Report</h3>
-                <label>Course</label>
-                <select id="repCourse" onchange="onCourseChange('repCourse', 'repYear', 'repSem')">
-                    <option value="">Select Course</option>
-                    <option value="BPES">BPES</option>
-                    <option value="BPED">BPED</option>
-                    <option value="MPED">MPED</option>
-                </select>
-                <select id="repYear"></select>
-                <select id="repSem"></select>
-                
-                <hr style="margin:15px 0;">
-                
-                <h4 style="color:var(--primary);">1. Daily Report</h4>
-                <div style="display:flex; gap:10px;">
-                    <input type="date" id="repDate">
-                    <button class="btn btn-primary" onclick="generateDayReport()">View Day</button>
-                </div>
-
-                <hr style="margin:15px 0;">
-
-                <h4 style="color:var(--primary);">2. Monthly Report</h4>
-                <div style="display:flex; gap:10px;">
-                    <input type="month" id="repMonth">
-                    <button class="btn btn-primary" onclick="generatePeriodReport('monthly')">View Month</button>
-                </div>
-
-                <hr style="margin:15px 0;">
-
-                <h4 style="color:var(--primary);">3. Yearly Report</h4>
-                <div style="display:flex; gap:10px;">
-                    <input type="number" id="repYearInput" placeholder="Enter Year (e.g. 2025)">
-                    <button class="btn btn-primary" onclick="generatePeriodReport('yearly')">View Year</button>
-                </div>
-                
-                <hr style="margin:20px 0;">
-
-                <h4 style="color:var(--primary);">4. Individual Student</h4>
-                <div style="display:flex; gap:10px;">
-                    <input type="text" id="repRoll" placeholder="Roll No (e.g. A101)">
-                    <button class="btn btn-outline" onclick="generateIndividualReport()">View Student</button>
-                </div>
-            </div>
-
-            <div id="printableReport" style="display:none;">
-                <div style="text-align:center; margin-bottom:20px;">
-                    <img src="Annamalai_University_logo.png" style="height:60px;">
-                    <h2>Annamalai University</h2>
-                    <h4>Department of Physical Education</h4>
-                    <p id="repHeaderDetails" style="font-weight:bold; margin-top:5px;"></p>
-                </div>
-                
-                <div style="overflow-x:auto;">
-                    <table border="1" cellpadding="5" cellspacing="0" width="100%" style="border-collapse:collapse; text-align:center; font-size:0.9rem;">
-                        <thead id="repTableHead"></thead>
-                        <tbody id="repBody"></tbody>
-                    </table>
-                </div>
-
-                <br>
-                <div class="no-print" style="display:flex; gap:10px; flex-wrap:wrap;">
-                    <button class="btn btn-primary" onclick="window.print()">Print / Save PDF</button>
-                    <button class="btn btn-excel" onclick="downloadExcel()">Download Excel</button>
-                    <button class="btn btn-outline" onclick="closeReportModal()">Close</button>
-                </div>
-            </div>
-
+        <div>
+          <label>Post-test</label>
+          <input type="number" step="any" inputmode="decimal" data-var="${v.key}" data-field="post" value="${s.post}" placeholder="—">
         </div>
+      </div>
+    </div>`;
+  }).join('');
+
+  return `
+  <div class="card">
+    <div class="section-title">Select Subject</div>
+    <select id="subjSelect" style="margin-bottom:4px;">
+      ${state.subjects.map(s=>`<option value="${s.id}" ${s.id===dataSubjectId?'selected':''}>${escapeHtml(s.name)} — ${getGroupInfo(s.group).label}</option>`).join('')}
+    </select>
+    <div class="row" style="margin-top:8px;"><span class="pill ${g.class}">${g.label}</span></div>
+  </div>
+  <div class="card">
+    <div class="section-title">Test Scores — 12 Variables</div>
+    ${varsHtml}
+    <button id="saveScoresBtn" style="width:100%; margin-top:16px;">Confirm Save</button>
+    <div class="note" style="margin-top:8px;">Every field auto-saves as you type — this button just gives you a clear confirmation. Your data stays on this device until you clear it from the Export tab.</div>
+  </div>`;
+}
+
+function renderAnalysis(){
+  const enoughData = state.subjects.length>=2;
+  if(!enoughData){
+    return `<div class="card"><div class="empty"><h3>Not enough data yet</h3><div class="note">Add subjects and log pre/post scores for at least a couple of them to run analysis.</div></div></div>`;
+  }
+  const v = VARIABLES.find(vv=>vv.key===analysisVar);
+
+  // per-group data
+  const groupData = GROUPS.map(g=>{
+    const ids = subjectsInGroup(g.key).map(s=>s.id);
+    const {pre, post} = pairedArraysForVar(ids, v.key);
+    const paired = tTestPaired(pre, post);
+    const gains = pre.map((p,i)=>post[i]-p);
+    return {group:g, pre, post, gains, paired};
+  });
+
+  const descRows = groupData.map(gd=>{
+    const n = gd.pre.length;
+    if(n===0) return `<tr><td>${gd.group.label}</td><td class="num" colspan="5">no paired data</td></tr>`;
+    return `<tr>
+      <td><span class="pill ${gd.group.class}">${gd.group.label}</span></td>
+      <td class="num">${n}</td>
+      <td class="num">${mean(gd.pre).toFixed(2)} ± ${sd(gd.pre).toFixed(2)}</td>
+      <td class="num">${mean(gd.post).toFixed(2)} ± ${sd(gd.post).toFixed(2)}</td>
+      <td class="num">${mean(gd.gains).toFixed(2)}</td>
+    </tr>`;
+  }).join('');
+
+  const pairedRows = groupData.map(gd=>{
+    if(!gd.paired) return `<tr><td>${gd.group.label}</td><td class="num" colspan="4">n/a (need ≥2 paired)</td></tr>`;
+    const p = gd.paired;
+    return `<tr>
+      <td><span class="pill ${gd.group.class}">${gd.group.label}</span></td>
+      <td class="num">${p.t.toFixed(3)}</td>
+      <td class="num">${p.df}</td>
+      <td class="num">${p.p<0.001?'<0.001':p.p.toFixed(3)}</td>
+      <td class="num ${p.p<0.05?'sig-yes':'sig-no'}">${p.p<0.05?'Sig.':'n.s.'}</td>
+    </tr>`;
+  }).join('');
+
+  // between-group: pick metric
+  const metricArrays = groupData.map(gd => analysisMetric==='gain' ? gd.gains : gd.post);
+  const anova = oneWayAnova(metricArrays);
+  let anovaHtml = `<div class="muted">Not enough complete data across groups to run ANOVA for this variable.</div>`;
+  let tukeyHtml = '';
+  if(anova){
+    anovaHtml = `
+    <table>
+      <tr><th>F</th><th class="num">df</th><th class="num">p</th><th class="num">Result</th></tr>
+      <tr>
+        <td class="num">${anova.F.toFixed(3)}</td>
+        <td class="num">${anova.df1}, ${anova.df2}</td>
+        <td class="num">${anova.p<0.001?'<0.001':anova.p.toFixed(3)}</td>
+        <td class="num ${anova.p<0.05?'sig-yes':'sig-no'}">${anova.p<0.05?'Sig.':'n.s.'}</td>
+      </tr>
+    </table>`;
+    const labeled = GROUPS.map((g,i)=>({label:g.label, values: metricArrays[i]}));
+    const tukey = tukeyHSD(labeled, anova.msw, anova.df2);
+    tukeyHtml = `
+    <div class="section-title" style="margin-top:16px;">Tukey HSD Post-hoc (q crit. ${tukey.q.toFixed(2)})</div>
+    <table>
+      <tr><th>Pair</th><th class="num">Mean Diff</th><th class="num">HSD</th><th class="num">Result</th></tr>
+      ${tukey.results.map(r=>`<tr>
+        <td>${r.pair}</td>
+        <td class="num">${r.diff.toFixed(2)}</td>
+        <td class="num">${r.hsd.toFixed(2)}</td>
+        <td class="num ${r.sig?'sig-yes':'sig-no'}">${r.sig?'Sig.':'n.s.'}</td>
+      </tr>`).join('')}
+    </table>`;
+  }
+
+  return `
+  <div class="card">
+    <div class="section-title">Variable</div>
+    <select id="varSelect">
+      ${VARIABLES.map(vv=>`<option value="${vv.key}" ${vv.key===analysisVar?'selected':''}>${vv.label} (${vv.unit})</option>`).join('')}
+    </select>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Descriptives — ${v.label}</div>
+    <table>
+      <tr><th>Group</th><th class="num">n</th><th class="num">Pre (M±SD)</th><th class="num">Post (M±SD)</th><th class="num">Mean Gain</th></tr>
+      ${descRows}
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Paired t-test (within group, pre vs post)</div>
+    <table>
+      <tr><th>Group</th><th class="num">t</th><th class="num">df</th><th class="num">p</th><th class="num">Result</th></tr>
+      ${pairedRows}
+    </table>
+  </div>
+
+  <div class="card">
+    <div class="section-title">Between-Group Comparison</div>
+    <div class="toggle-row">
+      <button class="${analysisMetric==='gain'?'':'secondary'}" id="metricGain">Gain (Post − Pre)</button>
+      <button class="${analysisMetric==='post'?'':'secondary'}" id="metricPost">Post-test only</button>
     </div>
+    <div class="section-title" style="margin-bottom:8px;">One-Way ANOVA (Altitude vs Sea-Level vs Control)</div>
+    ${anovaHtml}
+    ${tukeyHtml}
+    <div class="disclaimer">This is a field-check tool. For thesis submission, confirm all values against SPSS output — p-values here use a standard incomplete-beta t/F approximation and a k=3 studentized-range table for Tukey HSD. Your data lives only in this browser on this device — export a CSV backup regularly.</div>
+  </div>`;
+}
 
-    <script>
-        // --- 1. CONFIG ---
-        const HOUR_LABELS = [
-            "Practical Hour 1 & 2",
-            "Theory 1",
-            "Theory 2",
-            "Theory 3",
-            "Practical Hour 3"
-        ];
+function renderExport(){
+  return `
+  <div class="card">
+    <div class="section-title">Export</div>
+    <div class="note" style="margin-bottom:14px;">Download your raw scores or summary statistics as CSV — ready to drop into SPSS, Excel, or your thesis appendix.</div>
+    <button id="exportRaw" class="secondary" style="width:100%; margin-bottom:10px;">Download Raw Data (CSV)</button>
+    <button id="exportSummary" class="secondary" style="width:100%;">Download Summary Stats (CSV)</button>
+  </div>
+  <div class="card">
+    <div class="section-title">Backup</div>
+    <div class="note">Every subject and score auto-saves to this device the moment you enter it — like a local database. It stays exactly as-is through app restarts, phone restarts, even months later, until you tap the button below.</div>
+    <button id="resetAll" class="ghost" style="border:1px solid var(--line); margin-top:10px;">Clear all data</button>
+  </div>`;
+}
 
-        // --- 2. INIT & CLOCK ---
-        function updateClock() {
-            const now = new Date();
-            const day = String(now.getDate()).padStart(2, '0');
-            const month = String(now.getMonth() + 1).padStart(2, '0');
-            const year = now.getFullYear();
-            let hours = now.getHours();
-            const minutes = String(now.getMinutes()).padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-            const strTime = `${day}/${month}/${year} - ${hours}:${minutes} ${ampm}`;
-            document.getElementById('dateTimeDisplay').innerText = strTime;
-        }
-        setInterval(updateClock, 1000);
-        updateClock(); 
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
 
-        document.getElementById('attendanceDate').valueAsDate = new Date();
-        document.getElementById('repDate').valueAsDate = new Date();
-        document.getElementById('repYearInput').value = new Date().getFullYear();
+/* ================= EVENTS ================= */
+function bindEvents(){
+  document.querySelectorAll('.tab-btn').forEach(b=>{
+    b.onclick = ()=>{ activeTab = b.dataset.tab; render(); };
+  });
 
-        // --- 3. DROPDOWN HELPERS ---
-        function onCourseChange(cId, yId, sId) {
-            updateYears(cId, yId);
-            if(sId) updateSemesters(cId, sId);
-        }
+  if(activeTab==='subjects'){
+    const addBtn = document.getElementById('addSubjectBtn');
+    if(addBtn) addBtn.onclick = ()=>{
+      const nameEl = document.getElementById('newName');
+      const groupEl = document.getElementById('newGroup');
+      const name = nameEl.value.trim();
+      if(!name){ showToast('Enter a name first'); return; }
+      if(state.subjects.length>=MAX_SUBJECTS){ showToast('Roster is full'); return; }
+      const id = 's' + Date.now() + Math.floor(Math.random()*1000);
+      state.subjects.push({id, name, group: groupEl.value});
+      saveState();
+      render();
+      showToast('Subject added');
+    };
+    document.querySelectorAll('[data-remove]').forEach(b=>{
+      b.onclick = ()=>{
+        const id = b.dataset.remove;
+        state.subjects = state.subjects.filter(s=>s.id!==id);
+        delete state.scores[id];
+        if(dataSubjectId===id) dataSubjectId = null;
+        saveState();
+        render();
+        showToast('Subject removed');
+      };
+    });
+  }
 
-        function updateYears(cId, yId) {
-            const course = document.getElementById(cId).value;
-            const yearSelect = document.getElementById(yId);
-            yearSelect.innerHTML = '<option value="">-- Year --</option>';
-            let years = (course === 'BPES') ? 3 : 2;
-            for(let i=1; i<=years; i++){
-                yearSelect.add(new Option(i + " Year", i));
-            }
-        }
+  if(activeTab==='data'){
+    const sel = document.getElementById('subjSelect');
+    if(sel) sel.onchange = ()=>{ dataSubjectId = sel.value; render(); };
+    const saveBtn = document.getElementById('saveScoresBtn');
+    if(saveBtn) saveBtn.onclick = ()=>{
+      document.querySelectorAll('[data-var]').forEach(inp=>{
+        setScore(dataSubjectId, inp.dataset.var, inp.dataset.field, inp.value);
+      });
+      saveState();
+      showToast('Scores saved');
+    };
+    // Auto-save as the person types, debounced, so nothing is lost even without tapping Save.
+    let autoSaveTimer = null;
+    document.querySelectorAll('[data-var]').forEach(inp=>{
+      inp.addEventListener('input', ()=>{
+        setScore(dataSubjectId, inp.dataset.var, inp.dataset.field, inp.value);
+        clearTimeout(autoSaveTimer);
+        autoSaveTimer = setTimeout(()=>{
+          saveState();
+          showAutoSaveIndicator();
+        }, 600);
+      });
+      inp.addEventListener('blur', ()=>{
+        setScore(dataSubjectId, inp.dataset.var, inp.dataset.field, inp.value);
+        saveState();
+        showAutoSaveIndicator();
+      });
+    });
+  }
 
-        function updateSemesters(cId, sId) {
-            const course = document.getElementById(cId).value;
-            const semSelect = document.getElementById(sId);
-            semSelect.innerHTML = '<option value="">-- Sem --</option>';
-            if(!course) return;
-            let totalSems = (course === 'BPES') ? 6 : 4;
-            for(let i=1; i<=totalSems; i++) {
-                semSelect.add(new Option("Semester " + i, i));
-            }
-        }
+  if(activeTab==='analysis'){
+    const vsel = document.getElementById('varSelect');
+    if(vsel) vsel.onchange = ()=>{ analysisVar = vsel.value; render(); };
+    const mg = document.getElementById('metricGain');
+    const mp = document.getElementById('metricPost');
+    if(mg) mg.onclick = ()=>{ analysisMetric='gain'; render(); };
+    if(mp) mp.onclick = ()=>{ analysisMetric='post'; render(); };
+  }
 
-        // --- 4. PAGE NAVIGATION ---
-        let selectedHour = null;
+  if(activeTab==='export'){
+    const er = document.getElementById('exportRaw');
+    if(er) er.onclick = downloadRawCsv;
+    const es = document.getElementById('exportSummary');
+    if(es) es.onclick = downloadSummaryCsv;
+    const rst = document.getElementById('resetAll');
+    if(rst) rst.onclick = ()=>{
+      if(confirm('This clears all subjects and scores from this device. Continue?')){
+        state = {subjects:[], scores:{}};
+        saveState();
+        render();
+        showToast('All data cleared');
+      }
+    };
+  }
+}
 
-        function goToPage2() {
-            const c = document.getElementById('courseSelect').value;
-            const y = document.getElementById('yearSelect').value;
-            const s = document.getElementById('semSelect').value;
-            if(!c || !y || !s) { alert("Select Course, Year & Sem"); return; }
+function triggerDownload(filename, content){
+  const blob = new Blob([content], {type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = filename;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
 
-            document.getElementById('page1').classList.remove('active-page');
-            document.getElementById('page2').classList.add('active-page');
-            document.getElementById('classTitle').innerText = `${c} - Year ${y} (Sem ${s})`;
-            
-            selectedHour = null;
-            document.querySelectorAll('.hour-option').forEach(el => el.classList.remove('selected'));
-            document.getElementById('studentListContainer').innerHTML = '<p style="text-align:center; color:#666; padding:20px;">Select an hour to load student list.</p>';
-        }
+function downloadRawCsv(){
+  const header = ['Subject','Group', ...VARIABLES.flatMap(v=>[`${v.label} Pre`, `${v.label} Post`])];
+  const lines = [header.join(',')];
+  state.subjects.forEach(s=>{
+    const row = [`"${s.name}"`, getGroupInfo(s.group).label];
+    VARIABLES.forEach(v=>{
+      const sc = getScore(s.id, v.key);
+      row.push(sc.pre===''?'':sc.pre, sc.post===''?'':sc.post);
+    });
+    lines.push(row.join(','));
+  });
+  triggerDownload('elevation-raw-data.csv', lines.join('\n'));
+  showToast('Raw data downloaded');
+}
 
-        function goToPage1() {
-            document.getElementById('page2').classList.remove('active-page');
-            document.getElementById('page1').classList.add('active-page');
-        }
+function downloadSummaryCsv(){
+  const lines = [['Variable','Group','n','Pre Mean','Pre SD','Post Mean','Post SD','Mean Gain','Paired t','Paired df','Paired p'].join(',')];
+  VARIABLES.forEach(v=>{
+    GROUPS.forEach(g=>{
+      const ids = subjectsInGroup(g.key).map(s=>s.id);
+      const {pre, post} = pairedArraysForVar(ids, v.key);
+      if(pre.length===0) return;
+      const paired = tTestPaired(pre, post);
+      const gains = pre.map((p,i)=>post[i]-p);
+      lines.push([
+        `"${v.label}"`, g.label, pre.length,
+        mean(pre).toFixed(3), sd(pre).toFixed(3),
+        mean(post).toFixed(3), sd(post).toFixed(3),
+        mean(gains).toFixed(3),
+        paired?paired.t.toFixed(3):'', paired?paired.df:'', paired?paired.p.toFixed(4):''
+      ].join(','));
+    });
+  });
+  triggerDownload('elevation-summary-stats.csv', lines.join('\n'));
+  showToast('Summary stats downloaded');
+}
 
-        // --- 5. ATTENDANCE LOGIC ---
-        function selectHour(el, hourName) {
-            document.querySelectorAll('.hour-option').forEach(d => d.classList.remove('selected'));
-            el.classList.add('selected');
-            selectedHour = hourName;
-            checkExistingRecord();
-        }
+/* ================= SPLASH SCREEN ================= */
+(function(){
+  const splash = document.getElementById('splashScreen');
+  let dismissed = false;
+  function dismiss(){
+    if(dismissed) return;
+    dismissed = true;
+    splash.classList.add('hide');
+    setTimeout(()=>{ if(splash.parentNode) splash.parentNode.removeChild(splash); }, 750);
+  }
+  splash.addEventListener('click', dismiss);
+  setTimeout(dismiss, 2400);
+})();
 
-        function checkExistingRecord() {
-            if(!selectedHour) return;
-
-            const c = document.getElementById('courseSelect').value;
-            const y = document.getElementById('yearSelect').value;
-            const s = document.getElementById('semSelect').value;
-            const d = document.getElementById('attendanceDate').value;
-            
-            const recordKey = `REC_${c}_${y}_${s}_${d}_${selectedHour}`;
-            const savedData = JSON.parse(localStorage.getItem(recordKey));
-            const studentKey = `STUD_${c}_${y}`;
-            const students = JSON.parse(localStorage.getItem(studentKey)) || [];
-
-            renderStudentList(students, savedData);
-        }
-
-        function renderStudentList(students, savedData) {
-            const container = document.getElementById('studentListContainer');
-            container.innerHTML = '';
-            if(students.length === 0) {
-                container.innerHTML = '<p style="color:red; text-align:center;">No students in database for this Year.</p>';
-                return;
-            }
-            students.forEach((stu, idx) => {
-                let status = 'Present'; 
-                if(savedData) {
-                    const record = savedData.find(r => r.roll === stu.roll);
-                    if(record) status = record.status;
-                }
-                const pClass = (status === 'Present') ? 'active-p' : '';
-                const aClass = (status === 'Absent') ? 'active-a' : '';
-
-                const html = `
-                <div class="student-row">
-                    <div class="student-info">
-                        <h4>${stu.name}</h4>
-                        <span>${stu.roll}</span>
-                    </div>
-                    <div class="status-toggle">
-                        <div class="status-btn ${pClass}" onclick="setStatus(${idx}, 'Present')" id="btn_p_${idx}">P</div>
-                        <div class="status-btn ${aClass}" onclick="setStatus(${idx}, 'Absent')" id="btn_a_${idx}">A</div>
-                        <input type="hidden" id="status_${idx}" value="${status}">
-                        <input type="hidden" id="roll_${idx}" value="${stu.roll}">
-                        <input type="hidden" id="name_${idx}" value="${stu.name}">
-                    </div>
-                </div>`;
-                container.innerHTML += html;
-            });
-        }
-
-        function setStatus(idx, val) {
-            document.getElementById(`status_${idx}`).value = val;
-            if(val === 'Present') {
-                document.getElementById(`btn_p_${idx}`).classList.add('active-p');
-                document.getElementById(`btn_a_${idx}`).classList.remove('active-a');
-            } else {
-                document.getElementById(`btn_p_${idx}`).classList.remove('active-p');
-                document.getElementById(`btn_a_${idx}`).classList.add('active-a');
-            }
-        }
-
-        function submitAttendance() {
-            if(!selectedHour) { alert("Select Hour"); return; }
-            const c = document.getElementById('courseSelect').value;
-            const y = document.getElementById('yearSelect').value;
-            const s = document.getElementById('semSelect').value;
-            const d = document.getElementById('attendanceDate').value;
-            const rows = document.querySelectorAll('.student-row');
-            if(rows.length === 0) return;
-
-            let recordData = [];
-            rows.forEach((row, i) => {
-                recordData.push({
-                    roll: document.getElementById(`roll_${i}`).value,
-                    name: document.getElementById(`name_${i}`).value,
-                    status: document.getElementById(`status_${i}`).value
-                });
-            });
-
-            const recordKey = `REC_${c}_${y}_${s}_${d}_${selectedHour}`;
-            localStorage.setItem(recordKey, JSON.stringify(recordData));
-            alert("Saved successfully!");
-        }
-
-        // --- 6. REPORT LOGIC ---
-        function openReportModal() { document.getElementById('reportModal').style.display = 'block'; }
-        function closeReportModal() { document.getElementById('reportModal').style.display = 'none'; document.getElementById('printableReport').style.display = 'none'; }
-
-        function downloadExcel() {
-            var table = document.getElementById("repBody").parentElement; 
-            var details = document.getElementById("repHeaderDetails").innerText;
-            var html = `
-            <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-            <head></head>
-            <body><h3>Annamalai University - Dept of Physical Education</h3><p>${details}</p>${table.outerHTML}</body></html>`;
-            var blob = new Blob([html], { type: "application/vnd.ms-excel" });
-            var link = document.createElement("a");
-            link.href = URL.createObjectURL(blob);
-            link.download = "Attendance_Report.xls";
-            link.click();
-        }
-
-        function generateDayReport() {
-            const c = document.getElementById('repCourse').value;
-            const y = document.getElementById('repYear').value;
-            const s = document.getElementById('repSem').value;
-            const d = document.getElementById('repDate').value;
-            if(!c || !y || !s || !d) { alert("Fill required fields"); return; }
-            const studentKey = `STUD_${c}_${y}`;
-            const students = JSON.parse(localStorage.getItem(studentKey));
-            if(!students || students.length === 0) { alert("No students found in database."); return; }
-
-            let headers = ["Roll", "Name", ...HOUR_LABELS, "Day %"];
-            let rows = students.map(stu => {
-                let rowData = [stu.roll, stu.name];
-                let presentCount = 0;
-                let totalMarked = 0;
-                HOUR_LABELS.forEach(hLabel => {
-                    const key = `REC_${c}_${y}_${s}_${d}_${hLabel}`;
-                    const sessionData = JSON.parse(localStorage.getItem(key)) || [];
-                    const record = sessionData.find(r => r.roll === stu.roll);
-                    let cellVal = "-";
-                    if(record) {
-                        cellVal = (record.status === 'Present') ? 'P' : 'A';
-                        totalMarked++;
-                        if(record.status === 'Present') presentCount++;
-                    }
-                    rowData.push(cellVal);
-                });
-                let percent = (totalMarked > 0) ? Math.round((presentCount / totalMarked) * 100) + "%" : "-";
-                rowData.push(percent);
-                return rowData;
-            });
-            showReportTable(`DAILY REPORT<br>Class: ${c} Year ${y} (Sem ${s}) | Date: ${d}`, headers, rows);
-        }
-
-        function generatePeriodReport(type) {
-            const c = document.getElementById('repCourse').value;
-            const y = document.getElementById('repYear').value;
-            const s = document.getElementById('repSem').value;
-            let filterStr = "";
-            let title = "";
-            if (type === 'monthly') {
-                const mInput = document.getElementById('repMonth').value; 
-                if(!mInput || !c || !y || !s) { alert("Select Month, Course, Year, Sem"); return; }
-                filterStr = mInput; 
-                title = `MONTHLY REPORT (${mInput})`;
-            } else {
-                const yInput = document.getElementById('repYearInput').value; 
-                if(!yInput || !c || !y || !s) { alert("Select Year, Course, Year, Sem"); return; }
-                filterStr = yInput;
-                title = `YEARLY REPORT (${yInput})`;
-            }
-            const students = JSON.parse(localStorage.getItem(`STUD_${c}_${y}`)) || [];
-            if(students.length === 0) { alert("No students found."); return; }
-            let stats = {}; 
-            students.forEach(stu => stats[stu.roll] = { name: stu.name, total: 0, present: 0 });
-            const prefix = `REC_${c}_${y}_${s}_`;
-            let foundRecords = false;
-            for(let i=0; i<localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if(key.startsWith(prefix)) {
-                    const parts = key.split('_');
-                    const datePart = parts[4]; 
-                    if(datePart.startsWith(filterStr)) {
-                        foundRecords = true;
-                        const sessionData = JSON.parse(localStorage.getItem(key));
-                        sessionData.forEach(rec => {
-                            if(stats[rec.roll]) {
-                                stats[rec.roll].total++;
-                                if(rec.status === 'Present') stats[rec.roll].present++;
-                            }
-                        });
-                    }
-                }
-            }
-            if(!foundRecords) { alert(`No records found for ${title}`); return; }
-            let headers = ["Roll", "Name", "Total Sessions", "Attended", "Percentage"];
-            let rows = [];
-            Object.keys(stats).sort().forEach(roll => {
-                const s = stats[roll];
-                const pct = s.total > 0 ? Math.round((s.present / s.total) * 100) + "%" : "0%";
-                rows.push([roll, s.name, s.total, s.present, pct]);
-            });
-            showReportTable(`${title}<br>Class: ${c} Year ${y} (Sem ${s})`, headers, rows);
-        }
-
-        function generateIndividualReport() {
-            const roll = document.getElementById('repRoll').value.trim();
-            const c = document.getElementById('repCourse').value;
-            const y = document.getElementById('repYear').value;
-            const s = document.getElementById('repSem').value;
-            if(!roll || !c || !y || !s) { alert("Please Select Course, Year, Semester and Enter Roll No."); return; }
-            const prefix = `REC_${c}_${y}_${s}_`; 
-            let totalSessions = 0, presentCount = 0;
-            let daysAttended = {}; 
-            let studentName = "";
-            for(let i=0; i<localStorage.length; i++) {
-                const key = localStorage.key(i);
-                if(key.startsWith(prefix)) {
-                    const sessionData = JSON.parse(localStorage.getItem(key));
-                    const studentRecord = sessionData.find(r => r.roll === roll);
-                    if(studentRecord) {
-                        if(!studentName) studentName = studentRecord.name;
-                        totalSessions++;
-                        if(studentRecord.status === 'Present') presentCount++;
-                        const parts = key.split('_');
-                        const date = parts[4]; 
-                        const hour = parts[5];
-                        if(!daysAttended[date]) daysAttended[date] = [];
-                        daysAttended[date].push({ hour: hour, status: studentRecord.status });
-                    }
-                }
-            }
-            if(totalSessions === 0) { alert("No attendance records found for Roll No: " + roll); return; }
-            const percentage = Math.round((presentCount / totalSessions) * 100);
-            let tableRows = [];
-            tableRows.push(["TOTAL SUMMARY", `Sessions: ${totalSessions}`, `Present: ${presentCount}`, `Percentage: ${percentage}%`]);
-            tableRows.push(["-", "-", "-", "-"]);
-            Object.keys(daysAttended).sort().forEach(date => {
-                daysAttended[date].forEach(rec => {
-                    tableRows.push([date, rec.hour, rec.status, "-"]);
-                });
-            });
-            showReportTable(`INDIVIDUAL REPORT<br>Name: ${studentName} | Roll: ${roll}<br>Overall: ${percentage}%`, ["Date", "Hour", "Status", "Note"], tableRows);
-        }
-
-        function showReportTable(title, headers, rows) {
-            document.getElementById('printableReport').style.display = 'block';
-            document.getElementById('repHeaderDetails').innerHTML = title;
-            let theadHTML = '<tr style="background:#eee;">';
-            headers.forEach(h => theadHTML += `<th>${h}</th>`);
-            theadHTML += '</tr>';
-            document.getElementById('repTableHead').innerHTML = theadHTML;
-            let tbodyHTML = '';
-            rows.forEach(r => {
-                tbodyHTML += '<tr>';
-                r.forEach((cell, idx) => {
-                    let color = '';
-                    if(cell === 'A' || cell === 'Absent') color = 'color:red; font-weight:bold;';
-                    if(cell === 'P' || cell === 'Present') color = 'color:green; font-weight:bold;';
-                    if(typeof cell === 'string' && cell.includes('%')) color = 'font-weight:bold; color:#004085;';
-                    tbodyHTML += `<td style="${color}">${cell}</td>`;
-                });
-                tbodyHTML += '</tr>';
-            });
-            document.getElementById('repBody').innerHTML = tbodyHTML;
-        }
-
-        // --- 7. STUDENT MANAGEMENT ---
-        function openDataModal() { document.getElementById('dataModal').style.display = 'block'; updateYears('addCourse', 'addYear'); }
-        function closeDataModal() { document.getElementById('dataModal').style.display = 'none'; }
-
-        function saveOneStudent() {
-            const c = document.getElementById('addCourse').value;
-            const y = document.getElementById('addYear').value;
-            const r = document.getElementById('newRoll').value;
-            const n = document.getElementById('newName').value;
-            if(!r || !n) return;
-            saveDB(c, y, r, n);
-            document.getElementById('newRoll').value = '';
-            document.getElementById('newName').value = '';
-            alert("Student Saved!");
-        }
-
-        function importBulk() {
-            const c = document.getElementById('addCourse').value;
-            const y = document.getElementById('addYear').value;
-            const text = document.getElementById('bulkInput').value;
-            if(!text) return;
-            text.split('\n').forEach(line => {
-                const p = line.split(',');
-                if(p.length >= 2) saveDB(c, y, p[0].trim(), p[1].trim());
-            });
-            alert("Import Successful");
-        }
-
-        function saveDB(c, y, roll, name) {
-            const key = `STUD_${c}_${y}`;
-            let arr = JSON.parse(localStorage.getItem(key)) || [];
-            arr.push({ roll, name });
-            localStorage.setItem(key, JSON.stringify(arr));
-        }
-
-        // --- NEW CLEAR BATCH FUNCTION ---
-        function clearBatchDB() {
-            const c = document.getElementById('addCourse').value;
-            const y = document.getElementById('addYear').value;
-            if(!c || !y) { alert("Select Course and Year first"); return; }
-            if(confirm(`Are you sure you want to DELETE ALL students in ${c} - Year ${y}?\nThis cannot be undone.`)) {
-                const key = `STUD_${c}_${y}`;
-                localStorage.removeItem(key);
-                alert("Student list cleared.");
-            }
-        }
-    </script>
+/* ================= INIT ================= */
+loadState();
+</script>
 </body>
 </html>
